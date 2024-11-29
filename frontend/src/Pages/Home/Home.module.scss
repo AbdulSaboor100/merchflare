@@ -1,0 +1,13 @@
+.main_home_container {
+  margin-top: 6rem;
+
+  .product_container {
+    box-sizing: border-box;
+    flex-flow: wrap;
+    width: 100%;
+    gap: 32px;
+    justify-content: center;
+    display: grid;
+    margin-top: 6rem;
+  }
+}

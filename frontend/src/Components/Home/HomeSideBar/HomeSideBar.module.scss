@@ -1,0 +1,92 @@
+.home_side_bar_container {
+  .selection_container {
+    .select_box {
+      margin: 16px 0px 0px;
+      &:first-child {
+        margin: 0;
+      }
+      label {
+        line-height: 1.4375em;
+        font-size: 1rem;
+        font-weight: 400;
+        color: rgb(145, 158, 171);
+        display: block;
+        transform-origin: left top;
+        text-overflow: ellipsis;
+        max-width: calc(133% - 24px);
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        transform: translate(14px, -9px) scale(0.75);
+        z-index: 1;
+        pointer-events: auto;
+        user-select: none;
+        padding: 0px;
+        white-space: nowrap;
+        overflow: hidden;
+        transition: color 200ms cubic-bezier(0, 0, 0.2, 1),
+          transform 200ms cubic-bezier(0, 0, 0.2, 1),
+          max-width 200ms cubic-bezier(0, 0, 0.2, 1);
+      }
+    }
+  }
+  .filter_container {
+    .range_filter {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      margin-top: 16px;
+      span {
+        margin: 0px 0px 8px 0px;
+        line-height: 1.5;
+        font-size: 0.75rem;
+        font-weight: 400;
+        color: rgb(145, 158, 171);
+        text-align: left;
+        font-style: italic;
+      }
+      .date_container {
+        position: relative;
+        .static_date {
+          position: absolute;
+          top: 2.5rem;
+          left: 0;
+          right: 0;
+
+          background-color: rgb(255, 255, 255);
+          box-shadow: rgba(145, 158, 171, 0.2) 0px 0px 2px 0px,
+            rgba(145, 158, 171, 0.12) 0px 12px 24px -4px !important;
+          transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+      }
+      .input_container {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        label {
+          line-height: 1.4375em;
+          font-size: 1rem;
+          font-weight: 400;
+          color: rgb(145, 158, 171);
+          display: block;
+          transform-origin: left top;
+          text-overflow: ellipsis;
+          max-width: calc(133% - 24px);
+          position: absolute;
+          left: 0px;
+          top: 0px;
+          transform: translate(14px, -9px) scale(0.75);
+          z-index: 1;
+          pointer-events: auto;
+          user-select: none;
+          padding: 0px;
+          white-space: nowrap;
+          overflow: hidden;
+          transition: color 200ms cubic-bezier(0, 0, 0.2, 1),
+            transform 200ms cubic-bezier(0, 0, 0.2, 1),
+            max-width 200ms cubic-bezier(0, 0, 0.2, 1);
+        }
+      }
+    }
+  }
+}

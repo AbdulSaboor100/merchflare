@@ -1,0 +1,61 @@
+$primary-font: "Public Sans", sans-serif;
+
+// COLORS
+$black_primary: #18181b;
+
+// COLORS
+$white: #ffffff;
+$black: #000000;
+$black2: #333;
+$red: red;
+$green: green;
+$yellow: yellow;
+$blue: #4096ff;
+$blue2: #3f7ee8;
+$gray1: #f9fafb;
+$gray2: hsla(0, 0%, 100%, 0.9);
+$gray3: #636363;
+$gray4: #313131;
+$gray5: #f2f2f2;
+$gray6: #efefef;
+// BORDER COLOR
+$gray7: #d9d9d9;
+
+// RESPONSIVE BREAKPOINTS
+$desktop: 1440px;
+$tablet-landscape: 1024px;
+$tablet: 768px;
+$mobile: 500px;
+$xs-mobile: 300px;
+
+@mixin media($breakpoint) {
+  @if $breakpoint ==tablet {
+    @media only screen and (max-width: $tablet) {
+      @content;
+    }
+  }
+
+  @if $breakpoint ==tablet-large {
+    @media only screen and (max-width: $tablet-landscape) {
+      @content;
+    }
+  }
+
+  @if $breakpoint ==mobile {
+    @media only screen and (max-width: $mobile) {
+      @content;
+    }
+  }
+
+  @if $breakpoint ==desktop {
+    @media only screen and (max-width: $desktop) {
+      @content;
+    }
+  }
+
+  @if $breakpoint ==xs-mobile {
+    @media only screen and (max-width: $xs-mobile) {
+      @content;
+    }
+  }
+}

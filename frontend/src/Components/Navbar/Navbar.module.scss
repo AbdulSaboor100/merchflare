@@ -1,0 +1,50 @@
+.navbar_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 64px;
+  .brand_container {
+    h3 {
+      cursor: pointer;
+      font-weight: 800;
+      line-height: 1.33333;
+      font-size: 1.5rem;
+    }
+  }
+  .details_container {
+    display: flex;
+    p {
+      margin: 0px 0px 0px 40px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      text-align: left;
+      font-weight: 600;
+      line-height: 1.57143;
+      font-size: 0.875rem;
+      color: rgb(33, 43, 54);
+      outline: 0px;
+      cursor: pointer;
+      position: relative;
+      color: rgb(33, 43, 54);
+      transition: opacity 200ms cubic-bezier(0.4, 0, 0.2, 1);
+      &:hover {
+        opacity: 0.48;
+        background-color: transparent;
+      }
+    }
+    .selected {
+      color: rgb(0, 171, 85);
+      &::before {
+        content: "";
+        border-radius: 50%;
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        left: -14px;
+        opacity: 0.48;
+        background-color: currentcolor;
+      }
+    }
+  }
+}
