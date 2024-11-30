@@ -9,6 +9,7 @@
 
 body {
   font-family: $primary-font;
+  padding: 0 !important;
 }
 
 .MuiInputLabel-root {
@@ -24,4 +25,27 @@ body {
       border-width: 1px;
     }
   }
+}
+
+.MuiPopover-root {
+  position: initial !important;
+}
+
+.MuiList-root {
+  padding: 0 !important;
+}
+
+.MuiPaper-root {
+  background-color: #ffffff !important;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
+    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow) !important;
+  --tw-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -4px rgba(0, 0, 0, 0.1) !important;
+  --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color),
+    0 4px 6px -4px var(--tw-shadow-color) !important;
+  animation-duration: 0.3s !important;
+  transition-property: box-shadow !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+  border-width: 1px !important;
+  border-radius: 0.5rem !important;
 }

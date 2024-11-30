@@ -193,7 +193,8 @@ const HomeSideBar = () => {
             <TextField
               id="input-with-icon-textfield"
               size="small"
-              defaultValue={"All Time"}
+              // defaultValue={"All Time"}
+              value={"All Time"}
               sx={{ width: "100%" }}
               onClick={() => setIsDatePickerActive(!isDatePickerActive)}
               slotProps={{
