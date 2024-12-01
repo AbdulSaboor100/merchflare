@@ -7,6 +7,7 @@ import {
   Input,
   InputAdornment,
   MenuItem,
+  Button,
 } from "@mui/material";
 import {
   DatePicker,
@@ -230,6 +231,9 @@ const HomeSideBar = () => {
             />
           </Box>
         </Box>
+        <Button size="large" sx={{ width: "100%", marginTop: "16px" }}>
+          Search Products
+        </Button>
       </div>
     </div>
   );

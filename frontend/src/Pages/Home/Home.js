@@ -15,10 +15,6 @@ const Home = () => {
           </Grid>
           <Grid item sm={12} md={8} lg={9}>
             <Grid container spacing={4}>
-              {/* <Grid item lg={3}></Grid>
-              <Grid item lg={3}></Grid>
-              <Grid item lg={3}></Grid> */}
-
               <Grid item lg={3}>
                 <ProductCard />
               </Grid>

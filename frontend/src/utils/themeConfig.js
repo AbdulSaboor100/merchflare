@@ -1,0 +1,65 @@
+export const theme = {
+  token: {
+    colorPrimary: "#01CDA8",
+    fontFamily: "'Roboto', sans-serif",
+  },
+  components: {
+    Checkbox: {
+      controlItemBgActive: "#01CDA8",
+      colorBorder: "#121619",
+      controlHeight: 16,
+    },
+    Table: {
+      headerBg: "var(--CoolGray-10, #F2F4F8)",
+      borderColor: "var(--CoolGray-20, #DDE1E6)",
+      cellPaddingBlock: "16px 12px",
+      headerBorderRadius: "0",
+    },
+    // Input: {
+    //   inputFontSize: 16,
+    //   lineHeight: "140%",
+    //   colorBorder: "var(--CoolGray-30, #C1C7CD)",
+    //   colorBgContainer: "var(--CoolGray-10, #F2F4F8)",
+    //   paddingBlock: "12px 16px",
+    //   borderRadius: 0,
+    //   lineWidth: 0,
+    //   activeShadow: "none",
+    //   colorText: "var(--CoolGray-60, #697077)",
+    //   colorTextPlaceholder: "var(--CoolGray-60, #697077)",
+    // },
+    // Button: {
+    //   defaultActiveBg: "#01CDA8",
+    //   defaultHoverBorderColor: "#01CDA8",
+    //   colorBgContainer: "#01CDA8",
+    //   defaultHoverColor: "#FFF",
+    //   defaultActiveColor: "#FFF",
+    //   defaultActiveBorderColor: "#01CDA8",
+    //   // padding: "16px 12px",
+    //   defaultColor: "#FFF",
+    //   // defaultBorderColor: "var(--light-gray-light-gray-2, #dde2e4)",
+    //   colorBorder: "none",
+    //   fontWeight: 500,
+
+    //   // Button SM
+    //   borderRadiusSM: 0,
+    //   controlHeightSM: "auto",
+    //   paddingBlockSM: "7px 12px",
+    //   // contentFontSizeSM: 13,
+    //   // paddingInlineSM: 41,
+    //   // paddingBlockSM: 10,
+    //   // Button MD
+    //   // paddingInline: 41,
+    //   // paddingBlock: "16px 12px",
+    //   paddingBlock: "11px 12px 11px",
+    //   borderRadius: 0,
+    //   controlHeight: "auto",
+    //   fontSize: 16,
+    //   // Button LG
+    //   // contentFontSizeLG: 13,
+    //   // paddingInlineLG: 41,
+    //   borderRadiusLG: 0,
+    //   paddingBlockLG: "16px 12px 16px",
+    //   controlHeightLG: "auto",
+    // },
+  },
+};
