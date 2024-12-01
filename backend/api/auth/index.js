@@ -146,9 +146,14 @@ router.post(
   [check("email", "Email is required or is invalid").isEmail()],
   async (req, res) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+    const errorResult = errors.formatWith((error) => {
+      return { message: error.msg, error: true };
+    });
+
+    if (!errorResult.isEmpty()) {
+      return res.status(400).json({ errors: errorResult.array() });
     }
+
     const { email } = req.body;
 
     const user = await User.findOne({ email }).select("-password");
@@ -204,55 +209,71 @@ router.post(
   }
 );
 
-// router.post('/user/code', [check('code', 'Code is required').exists()], async (req, res) => {
-//   const errors = validationResult(req);
-//   if (!errors.isEmpty()) {
-//     return res.status(400).json({ errors: errors.array() });
-//   }
-//   const { code } = req.body;
-//   try {
-//     if (!code) {
-//       return res.status(400).json({ errors: [{ message: 'Code not found' }] });
-//     }
-//     const verify = await Verify.findOne({ code });
-//     if (!verify) {
-//       return res.status(400).json({ errors: [{ message: 'Link expired' }] });
-//     }
-//     if (verify?.code !== code) {
-//       return res.status(400).json({ errors: [{ message: 'Link expired' }] });
-//     }
+router.post(
+  "/user/code",
+  [check("code", "Code is required").exists()],
+  async (req, res) => {
+    const errors = validationResult(req);
+    const errorResult = errors.formatWith((error) => {
+      return { message: error.msg, error: true };
+    });
 
-//     const user = await User.findOne({
-//       'profile.email': verify?.email,
-//     }).select('-password');
+    if (!errorResult.isEmpty()) {
+      return res.status(400).json({ errors: errorResult.array() });
+    }
 
-//     if (!user) {
-//       return res.status(400).json({ errors: [{ message: 'User not found to verify' }] });
-//     }
-//     await User.findOneAndUpdate({ 'profile.email': verify?.email }, { active: true });
-//     await Verify.findOneAndDelete({ code });
+    const { code } = req.body;
+    try {
+      if (!code) {
+        return res
+          .status(400)
+          .json({ errors: [{ message: "Code not found" }] });
+      }
+      const verify = await Verify.findOne({ code });
+      if (!verify) {
+        return res.status(400).json({ errors: [{ message: "Link expired" }] });
+      }
+      if (verify?.code !== code) {
+        return res.status(400).json({ errors: [{ message: "Link expired" }] });
+      }
 
-//     const payload = {
-//       user: {
-//         id: user?._id,
-//       },
-//     };
-//     jwt.sign(payload, jwtSecret, {}, (err, token) => {
-//       if (err) {
-//         throw err;
-//       } else {
-//         res.status(200).json({
-//           token,
-//           message: 'User verified successfully',
-//           success: true,
-//         });
-//       }
-//     });
-//   } catch (error) {
-//     console.log(error.message);
-//     res.status(500).send('Server error');
-//   }
-// });
+      const user = await User.findOne({
+        email: verify?.email,
+      }).select("-password");
+
+      if (!user) {
+        return res
+          .status(400)
+          .json({ errors: [{ message: "User not found" }] });
+      }
+      await User.findOneAndUpdate(
+        { email: verify?.email },
+        { is_verified: true }
+      );
+      await Verify.findOneAndDelete({ code });
+
+      const payload = {
+        user: {
+          id: user?._id,
+        },
+      };
+      jwt.sign(payload, jwtSecret, {}, (err, token) => {
+        if (err) {
+          throw err;
+        } else {
+          res.status(200).json({
+            token,
+            message: "User verified successfully",
+            success: true,
+          });
+        }
+      });
+    } catch (error) {
+      console.log(error.message);
+      res.status(500).send("Server error");
+    }
+  }
+);
 
 // router.post('/user/forget-password-request', [check('email', 'Email is required')], async (req, res) => {
 //   const errors = validationResult(req);

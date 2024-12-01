@@ -50,6 +50,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/auth", require("./api/auth/index"));
 app.use("/api/merch", require("./api/merch/index"));
+app.use("/api/user", require("./api/user/index"));
 
 app.listen(PORT, () => {
   console.log("Server is running");

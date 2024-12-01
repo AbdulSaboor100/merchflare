@@ -3,7 +3,7 @@ import { BASE_URL } from "../../Config";
 import axios from "axios";
 // import { toastError, toastSuccess } from "../../utils/toast";
 import { axiosErrorHandler, setCookie } from "../../utils/helper";
-import { getAdmin } from "./getAdminSlice";
+import { getAdmin } from "./getUserSlice";
 
 const initialState = {
   isLoading: false,
@@ -13,15 +13,15 @@ const initialState = {
   message: "",
 };
 
-export const AdminLogin = createAsyncThunk(
-  "Auth/Admin-Login",
+export const userLogin = createAsyncThunk(
+  "Auth/User-Login",
   async (
     { data, navigate, rememberMe, onSuccess },
     { rejectWithValue, dispatch }
   ) => {
     try {
       const response = await axios.post(
-        `${BASE_URL}/api/auth/admin/login`,
+        `${BASE_URL}/api/auth/user/signin`,
         data
       );
       onSuccess && onSuccess();
@@ -38,23 +38,23 @@ export const AdminLogin = createAsyncThunk(
   }
 );
 
-const adminLoginSlice = createSlice({
+const userLoginSlice = createSlice({
   name: "Login",
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(AdminLogin.pending, (state) => {
+    builder.addCase(userLogin.pending, (state) => {
       state.isLoading = true;
       state.isSuccess = false;
     });
-    builder.addCase(AdminLogin.fulfilled, (state, action) => {
+    builder.addCase(userLogin.fulfilled, (state, action) => {
       state.isLoading = false;
       state.isError = false;
       state.errors = [];
       state.isSuccess = action?.payload?.success;
       state.message = action?.payload?.message;
     });
-    builder.addCase(AdminLogin.rejected, (state, action) => {
+    builder.addCase(userLogin.rejected, (state, action) => {
       state.isLoading = false;
       state.errors = action.payload?.errors || [];
       state.products = [];
@@ -63,4 +63,4 @@ const adminLoginSlice = createSlice({
   },
 });
 
-export default adminLoginSlice?.reducer;
+export default userLoginSlice?.reducer;

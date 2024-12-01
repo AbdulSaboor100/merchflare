@@ -1,4 +1,5 @@
-import moment from "moment";
+// import moment from "moment";
+import dayjs from "dayjs";
 import { toastError } from "./toast";
 
 export const setCookie = (key, data, isSessional = false) => {
@@ -25,16 +26,16 @@ export const removeCookie = (key) => {
 };
 
 export const formatDate = (date, format) => {
-  return moment(date).format(format);
+  return dayjs(date).format(format);
 };
 
 export const formatDateToStandard = (date) => {
-  const momentInstance = moment(date, false);
+  const momentInstance = dayjs(date, false);
   return momentInstance.isValid() ? momentInstance.format("DD-MM-YYYY") : "N/A";
 };
 
 export const formatTimestamp = (date) => {
-  const newDate = moment.unix(date / 1000);
+  const newDate = dayjs.unix(date / 1000);
   return newDate.format("DD-MM-YYYY");
 };
 

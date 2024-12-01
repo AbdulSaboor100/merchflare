@@ -1,18 +1,27 @@
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const passport = require('passport');
+const passport = require("passport");
+const User = require("../modals/User");
+const JwtStrategy = require("passport-jwt").Strategy;
+const ExtractJwt = require("passport-jwt").ExtractJwt;
+
+let opts = {};
+opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+opts.secretOrKey = process.env.JWT_SECRET;
 
 passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.CLIENT_ID || `32142`,
-      clientSecret: process.env.CLIENT_SECRET || `GO24`,
-      callbackURL: `${process.env.SERVER_URL}/api/auth/google/callback`,
-      scope: ['profile', 'email'],
-    },
-    function (accessToken, refreshToken, profile, callback) {
-      callback(null, profile);
+  new JwtStrategy(opts, async function (jwt_payload, done) {
+    try {
+      const user = await User?.findById(jwt_payload?.user?.id);
+
+      if (user?.id) {
+        return done(null, user);
+      }
+
+      return done(null, false);
+    } catch (error) {
+      console.log(`ERROR IN JWT STRATEGY: ${error}`);
+      return done(null, false);
     }
-  )
+  })
 );
 
 passport.serializeUser((user, done) => {

@@ -1,24 +1,9 @@
 const express = require("express");
-const jwt = require("jsonwebtoken");
-const User = require("../../modals/User");
-const { check, validationResult } = require("express-validator");
-const {
-  encryptPassword,
-  comparePassword,
-  generateUniqueNumber,
-} = require("../../utils/helper");
-const Verify = require("../../modals/Verify");
-const {
-  getVerifyEmailHtmlTemplate,
-  getVerifyEmailTextTemplate,
-} = require("../../emailTemplates/verifyEmail");
-const sendMail = require("../../utils/mail");
+const passport = require("passport");
 const router = express();
-const jwtSecret = process.env.JWT_SECRET || "";
-const CLIENT_URL = process.env.CLIENT_URL || `http://`;
 
 // User routes
-router.get("/", async (req, res) => {
+router.get("/", [passport.authenticate("jwt")], async (req, res) => {
   try {
     const mockData = [
       {

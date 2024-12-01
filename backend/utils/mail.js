@@ -1,12 +1,12 @@
-const sgMail = require('@sendgrid/mail');
-const nodemailer = require('nodemailer');
+const sgMail = require("@sendgrid/mail");
+const nodemailer = require("nodemailer");
 
 const sendGridMail = async (email, subject, text, html) => {
   try {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY || `SG4425`);
     const details = {
       to: email,
-      from: process.env.SENDGRID_VERIFY_SENDER || '',
+      from: process.env.SENDGRID_VERIFY_SENDER || "",
       subject: subject,
       text: text,
       html: html,
@@ -29,7 +29,9 @@ const sendCustomMail = async (from, email, subject, text, html) => {
       },
     });
 
-    console.log(`sending email: ${process.env.SMTP_USER_HOST}, ${process.env.SMTP_USER_PORT}, ${process.env.SMTP_USER_EMAIL}, ${process.env.SMTP_USER_PASSWORD}`);
+    console.log(
+      `sending email: ${process.env.SMTP_USER_HOST}, ${process.env.SMTP_USER_PORT}, ${process.env.SMTP_USER_EMAIL}, ${process.env.SMTP_USER_PASSWORD}`
+    );
 
     let info = await transporter.sendMail({
       from: from,
@@ -46,24 +48,25 @@ const sendCustomMail = async (from, email, subject, text, html) => {
 };
 
 const sendMail = async (email, subject, text, html) => {
-  const SMTP_VERIFY_SENDER_NAME = process.env.SMTP_VERIFY_SENDER_NAME || '';
-  const SMTP_VERIFY_SENDER_EMAIL = process.env.SMTP_VERIFY_SENDER_EMAIL || '';
+  const SMTP_VERIFY_SENDER_NAME = process.env.SMTP_VERIFY_SENDER_NAME || "";
+  const SMTP_VERIFY_SENDER_EMAIL = process.env.SMTP_VERIFY_SENDER_EMAIL || "";
   let result;
-  if (process.env.APP_ENVIRONMENT === 'development') {
-    result = await sendGridMail(email, subject, text, html);
-  } else {
+  result = await sendGridMail(email, subject, text, html);
+  // if (process.env.APP_ENVIRONMENT === 'development') {
+  //   result = await sendGridMail(email, subject, text, html);
+  // } else {
 
-    const from = SMTP_VERIFY_SENDER_NAME && SMTP_VERIFY_SENDER_EMAIL ? {
-      name: SMTP_VERIFY_SENDER_NAME,
-      address: SMTP_VERIFY_SENDER_EMAIL
-    } : SMTP_VERIFY_SENDER_EMAIL;
+  //   const from = SMTP_VERIFY_SENDER_NAME && SMTP_VERIFY_SENDER_EMAIL ? {
+  //     name: SMTP_VERIFY_SENDER_NAME,
+  //     address: SMTP_VERIFY_SENDER_EMAIL
+  //   } : SMTP_VERIFY_SENDER_EMAIL;
 
-    if (!from) {
-      console.error(`No SMTP_VERIFY_SENDER_EMAIL variable set. Email not sent.`);
-    }
+  //   if (!from) {
+  //     console.error(`No SMTP_VERIFY_SENDER_EMAIL variable set. Email not sent.`);
+  //   }
 
-    result = await sendCustomMail(from, email, subject, text, html);
-  }
+  //   result = await sendCustomMail(from, email, subject, text, html);
+  // }
   return result;
 };
 
