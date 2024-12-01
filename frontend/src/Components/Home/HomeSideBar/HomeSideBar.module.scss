@@ -5,29 +5,6 @@
       &:first-child {
         margin: 0;
       }
-      label {
-        line-height: 1.4375em;
-        font-size: 1rem;
-        font-weight: 400;
-        color: rgb(145, 158, 171);
-        display: block;
-        transform-origin: left top;
-        text-overflow: ellipsis;
-        max-width: calc(133% - 24px);
-        position: absolute;
-        left: 0px;
-        top: 0px;
-        transform: translate(14px, -9px) scale(0.75);
-        z-index: 1;
-        pointer-events: auto;
-        user-select: none;
-        padding: 0px;
-        white-space: nowrap;
-        overflow: hidden;
-        transition: color 200ms cubic-bezier(0, 0, 0.2, 1),
-          transform 200ms cubic-bezier(0, 0, 0.2, 1),
-          max-width 200ms cubic-bezier(0, 0, 0.2, 1);
-      }
     }
   }
   .filter_container {
@@ -63,29 +40,6 @@
         display: flex;
         align-items: center;
         flex-direction: row;
-        label {
-          line-height: 1.4375em;
-          font-size: 1rem;
-          font-weight: 400;
-          color: rgb(145, 158, 171);
-          display: block;
-          transform-origin: left top;
-          text-overflow: ellipsis;
-          max-width: calc(133% - 24px);
-          position: absolute;
-          left: 0px;
-          top: 0px;
-          transform: translate(14px, -9px) scale(0.75);
-          z-index: 1;
-          pointer-events: auto;
-          user-select: none;
-          padding: 0px;
-          white-space: nowrap;
-          overflow: hidden;
-          transition: color 200ms cubic-bezier(0, 0, 0.2, 1),
-            transform 200ms cubic-bezier(0, 0, 0.2, 1),
-            max-width 200ms cubic-bezier(0, 0, 0.2, 1);
-        }
       }
     }
   }

@@ -1,6 +1,17 @@
-import React, { useRef } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import styles from "./ProductCard.module.scss";
-import { Box, Divider, Menu, MenuItem, Paper, Typography } from "@mui/material";
+import {
+  Box,
+  ClickAwayListener,
+  Divider,
+  Grow,
+  Menu,
+  MenuItem,
+  MenuList,
+  Paper,
+  Popper,
+  Typography,
+} from "@mui/material";
 import {
   LineChart,
   Line,
@@ -1161,161 +1172,214 @@ const data = [
 ];
 
 const ProductCard = () => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  const elementRef = useRef(null);
+
+  const adjustPosition = () => {
+    if (elementRef.current) {
+      const element = elementRef.current;
+      const rect = element.getBoundingClientRect();
+
+      const r = window.innerWidth - rect.left;
+      if (rect?.width > r) {
+        element.style.left = `-${rect.width}px`;
+      }
+    }
   };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+
+  useEffect(() => {
+    // Attach listeners to adjust position on resize and scroll
+    window.addEventListener("resize", adjustPosition);
+    window.addEventListener("scroll", adjustPosition);
+
+    // Initial adjustment
+    adjustPosition();
+
+    // Cleanup listeners on unmount
+    return () => {
+      window.removeEventListener("resize", adjustPosition);
+      window.removeEventListener("scroll", adjustPosition);
+    };
+  }, []);
   return (
-    <div
-      className={styles.main_product_card_container}
-      onMouseMove={handleClick}
-      onMouseLeave={() => setAnchorEl(null)}
-    >
-      <Menu
-        anchorEl={anchorEl}
+    <Fragment>
+      {/* <Popper
+        // onMouseEnter={() => setAnchorEl(anchorEl)}
+        id={id}
         open={open}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
+        anchorEl={anchorEl}
+        placement="left-start"
+        sx={{ transform: "translate(-202px, 160px) !important" }}
       >
-        <Box className={styles.chart_container}>
+        <Paper>
+          <Box className={styles.chart_container}>
+            <div className={styles.title_container}>
+              <Typography variant="h5">BSR History</Typography>
+              <Typography variant="caption">Last 500 days</Typography>
+            </div>
+            <LineChart
+              width={500}
+              height={250}
+              data={data}
+              // margin={{
+              //   top: 5,
+              //   right: 30,
+              //   left: 20,
+              //   bottom: 5,
+              // }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="date" />
+              <YAxis dataKey="bsr" />
+              <Tooltip
+                formatter={(value, name) => [value, name?.toUpperCase()]}
+              />
+              <Line
+                type="monotone"
+                dataKey="bsr"
+                stroke="#8884d8"
+                dot={false}
+                strokeWidth={2}
+              />
+            </LineChart>
+          </Box>
+        </Paper>
+      </Popper> */}
+
+      <div
+        className={styles.main_product_card_container}
+        // onMouseEnter={handleClick}
+        // onMouseLeave={() => {
+        //   setAnchorEl(null);
+        // }}
+      >
+        <Paper className={styles.chart_paper_container} ref={elementRef}>
+          <Box className={styles.chart_container}>
+            <div className={styles.title_container}>
+              <Typography variant="h5">BSR History</Typography>
+              <Typography variant="caption">Last 500 days</Typography>
+            </div>
+            <LineChart
+              width={500}
+              height={250}
+              data={data}
+              // margin={{
+              //   top: 5,
+              //   right: 30,
+              //   left: 20,
+              //   bottom: 5,
+              // }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="date" />
+              <YAxis dataKey="bsr" />
+              <Tooltip
+                formatter={(value, name) => [value, name?.toUpperCase()]}
+              />
+              <Line
+                type="monotone"
+                dataKey="bsr"
+                stroke="#8884d8"
+                dot={false}
+                strokeWidth={2}
+              />
+            </LineChart>
+          </Box>
+        </Paper>
+        <Paper className={styles.product_card_container}>
+          <div className={styles.image_container}>
+            <Box
+              component={"img"}
+              src={"/Assets/product_1.png"}
+              alt={"Product image"}
+            />
+          </div>
           <div className={styles.title_container}>
-            <Typography variant="h5">BSR History</Typography>
-            <Typography variant="caption">Last 500 days</Typography>
-          </div>
-          <LineChart
-            width={500}
-            height={250}
-            data={data}
-            // margin={{
-            //   top: 5,
-            //   right: 30,
-            //   left: 20,
-            //   bottom: 5,
-            // }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" />
-            <YAxis dataKey="bsr" />
-            <Tooltip
-              formatter={(value, name) => [value, name?.toUpperCase()]}
-            />
-            <Line
-              type="monotone"
-              dataKey="bsr"
-              stroke="#8884d8"
-              dot={false}
-              strokeWidth={2}
-            />
-          </LineChart>
-        </Box>
-      </Menu>
-
-      <Paper className={styles.product_card_container}>
-        {/* <ResponsiveContainer width="100%" height="100%"> */}
-
-        {/* </ResponsiveContainer> */}
-
-        <div className={styles.image_container}>
-          <Box
-            component={"img"}
-            src={"/Assets/product_1.png"}
-            alt={"Product image"}
-          />
-        </div>
-        <div className={styles.title_container}>
-          <Typography variant="h6">Mens Fishing TShirt Dont</Typography>
-          <Typography variant="body1">
-            <Typography variant="caption">by</Typography>Geni Game
-          </Typography>
-        </div>
-        <Divider></Divider>
-        <div className={styles.details_container}>
-          <Box className={styles.color_strip}></Box>
-          <div className={styles.side}>
-            <Typography className={styles.text_1}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
-                <polyline points="16 7 22 7 22 13"></polyline>
-              </svg>{" "}
-              2,125
-            </Typography>
-            <Typography className={styles.text_2}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-              </svg>{" "}
-              311
+            <Typography variant="h6">Mens Fishing TShirt Dont</Typography>
+            <Typography variant="body1">
+              <Typography variant="caption">by</Typography>Geni Game
             </Typography>
           </div>
-          <div className={styles.side}>
-            <Typography className={styles.text_1}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
-                <polyline points="16 7 22 7 22 13"></polyline>
-              </svg>{" "}
-              52,115
-            </Typography>
-            <Typography className={styles.text_2}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <circle cx="8" cy="21" r="1"></circle>
-                <circle cx="19" cy="21" r="1"></circle>
-                <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
-              </svg>{" "}
-              111
-            </Typography>
-          </div>
-          <div className={styles.side}>
-            <Typography className={styles.text_1}>$19.99</Typography>
-          </div>
-          <div className={styles.side}>
-            <Typography className={styles.text_1}>
-              {/* <svg
+          <Divider></Divider>
+          <div className={styles.details_container}>
+            <Box className={styles.color_strip}></Box>
+            <div className={styles.side}>
+              <Typography className={styles.text_1}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                  <polyline points="16 7 22 7 22 13"></polyline>
+                </svg>{" "}
+                2,125
+              </Typography>
+              <Typography className={styles.text_2}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>{" "}
+                311
+              </Typography>
+            </div>
+            <div className={styles.side}>
+              <Typography className={styles.text_1}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+                  <polyline points="16 7 22 7 22 13"></polyline>
+                </svg>{" "}
+                52,115
+              </Typography>
+              <Typography className={styles.text_2}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="8" cy="21" r="1"></circle>
+                  <circle cx="19" cy="21" r="1"></circle>
+                  <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
+                </svg>{" "}
+                111
+              </Typography>
+            </div>
+            <div className={styles.side}>
+              <Typography className={styles.text_1}>$19.99</Typography>
+            </div>
+            <div className={styles.side}>
+              <Typography className={styles.text_1}>
+                {/* <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
               height="24"
@@ -1331,12 +1395,13 @@ const ProductCard = () => {
               <rect width="18" height="18" x="3" y="4" rx="2"></rect>
               <path d="M3 10h18"></path>
             </svg>{" "} */}
-              May 31, 2022
-            </Typography>
+                May 31, 2022
+              </Typography>
+            </div>
           </div>
-        </div>
-      </Paper>
-    </div>
+        </Paper>
+      </div>
+    </Fragment>
   );
 };
 

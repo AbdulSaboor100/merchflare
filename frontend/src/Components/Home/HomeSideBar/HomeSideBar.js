@@ -94,13 +94,13 @@ const HomeSideBar = () => {
           <Box className={styles.input_container}>
             <TextField
               label="Min"
-              defaultValue=" "
+              defaultValue="0"
               size="small"
               sx={{ width: "100%" }}
             />
             <TextField
               label="Max"
-              defaultValue=" "
+              defaultValue="0"
               size="small"
               sx={{ width: "100%", marginLeft: "16px" }}
             />
@@ -111,13 +111,13 @@ const HomeSideBar = () => {
           <Box className={styles.input_container}>
             <TextField
               label="Min"
-              defaultValue=" "
+              defaultValue="0"
               size="small"
               sx={{ width: "100%" }}
             />
             <TextField
               label="Max"
-              defaultValue=" "
+              defaultValue="0"
               size="small"
               sx={{ width: "100%", marginLeft: "16px" }}
             />
@@ -128,13 +128,13 @@ const HomeSideBar = () => {
           <Box className={styles.input_container}>
             <TextField
               label="Min"
-              defaultValue=" "
+              defaultValue="0"
               size="small"
               sx={{ width: "100%" }}
             />
             <TextField
               label="Max"
-              defaultValue=" "
+              defaultValue="0"
               size="small"
               sx={{ width: "100%", marginLeft: "16px" }}
             />
@@ -145,13 +145,13 @@ const HomeSideBar = () => {
           <Box className={styles.input_container}>
             <TextField
               label="Min"
-              defaultValue=" "
+              defaultValue="0"
               size="small"
               sx={{ width: "100%" }}
             />
             <TextField
               label="Max"
-              defaultValue=" "
+              defaultValue="0"
               size="small"
               sx={{ width: "100%", marginLeft: "16px" }}
             />
@@ -162,13 +162,13 @@ const HomeSideBar = () => {
           <Box className={styles.input_container}>
             <TextField
               label="Min"
-              defaultValue=" "
+              defaultValue="0"
               size="small"
               sx={{ width: "100%" }}
             />
             <TextField
               label="Max"
-              defaultValue=" "
+              defaultValue="0"
               size="small"
               sx={{ width: "100%", marginLeft: "16px" }}
             />
