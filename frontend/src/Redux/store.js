@@ -3,6 +3,7 @@ import userSignInSlice from "./Features/userSignInSlice";
 import getUserSlice from "./Features/getUserSlice";
 import userSignUpSlice from "./Features/userSignUpSlice";
 import userVerifySlice from "./Features/userVerifySlice";
+import getMerchSlice from "./Features/getMerchSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     userSignUp: userSignUpSlice,
     getUser: getUserSlice,
     userVerify: userVerifySlice,
+    getMerch: getMerchSlice,
   },
 });

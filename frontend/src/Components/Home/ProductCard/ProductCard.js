@@ -23,7 +23,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const data = [
+const bsrData = [
   {
     date: "2024-03-17",
     bsr: null,
@@ -1171,7 +1171,7 @@ const data = [
   },
 ];
 
-const ProductCard = () => {
+const ProductCard = ({ data }) => {
   const elementRef = useRef(null);
 
   const adjustPosition = () => {
@@ -1261,7 +1261,7 @@ const ProductCard = () => {
             <LineChart
               width={500}
               height={250}
-              data={data}
+              data={bsrData}
               // margin={{
               //   top: 5,
               //   right: 30,
@@ -1287,16 +1287,12 @@ const ProductCard = () => {
         </Paper>
         <Paper className={styles.product_card_container}>
           <div className={styles.image_container}>
-            <Box
-              component={"img"}
-              src={"/Assets/product_1.png"}
-              alt={"Product image"}
-            />
+            <Box component={"img"} src={data?.imageUrl} alt={"Product image"} />
           </div>
           <div className={styles.title_container}>
-            <Typography variant="h6">Mens Fishing TShirt Dont</Typography>
+            <Typography variant="h6">{data?.title}</Typography>
             <Typography variant="body1">
-              <Typography variant="caption">by</Typography>Geni Game
+              {/* <Typography variant="caption">by</Typography>Geni Game */}
             </Typography>
           </div>
           <Divider></Divider>
@@ -1318,7 +1314,7 @@ const ProductCard = () => {
                   <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
                   <polyline points="16 7 22 7 22 13"></polyline>
                 </svg>{" "}
-                2,125
+                {data?.bsr}
               </Typography>
               <Typography className={styles.text_2}>
                 <svg
@@ -1334,7 +1330,7 @@ const ProductCard = () => {
                 >
                   <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                 </svg>{" "}
-                311
+                {data?.reviews}
               </Typography>
             </div>
             <div className={styles.side}>
@@ -1353,7 +1349,7 @@ const ProductCard = () => {
                   <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
                   <polyline points="16 7 22 7 22 13"></polyline>
                 </svg>{" "}
-                52,115
+                {data?.avg30bsr}
               </Typography>
               <Typography className={styles.text_2}>
                 <svg
@@ -1371,11 +1367,11 @@ const ProductCard = () => {
                   <circle cx="19" cy="21" r="1"></circle>
                   <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path>
                 </svg>{" "}
-                111
+                {data?.sales}
               </Typography>
             </div>
             <div className={styles.side}>
-              <Typography className={styles.text_1}>$19.99</Typography>
+              <Typography className={styles.text_1}>${data?.price}</Typography>
             </div>
             <div className={styles.side}>
               <Typography className={styles.text_1}>
@@ -1395,7 +1391,7 @@ const ProductCard = () => {
               <rect width="18" height="18" x="3" y="4" rx="2"></rect>
               <path d="M3 10h18"></path>
             </svg>{" "} */}
-                May 31, 2022
+                {data?.published}
               </Typography>
             </div>
           </div>
