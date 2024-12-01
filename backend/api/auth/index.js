@@ -197,7 +197,7 @@ router.post(
     await codeSaved.save();
 
     res.status(200).json({
-      message: "Verification email sent successfully",
+      message: "Verification email has been sent",
       success: true,
     });
 

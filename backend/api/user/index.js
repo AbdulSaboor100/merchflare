@@ -23,7 +23,11 @@ router.get("/", [passport.authenticate("jwt")], async (req, res) => {
 
     res
       .status(200)
-      .json({ user, message: "User fetched successfully", success: true });
+      .json({
+        data: user,
+        message: "User fetched successfully",
+        success: true,
+      });
   } catch (error) {
     console.log(error.message);
     res.status(500).send("Server error");

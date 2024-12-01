@@ -11,7 +11,7 @@ const initialState = {
   errors: [],
   isSuccess: false,
   message: "",
-  admin: {},
+  data: {},
 };
 
 export const getUser = createAsyncThunk(
@@ -19,7 +19,7 @@ export const getUser = createAsyncThunk(
   async (token, { rejectWithValue }) => {
     try {
       setAuthToken(token);
-      const response = await axios.get(`${BASE_URL}/api/auth/user`);
+      const response = await axios.get(`${BASE_URL}/api/user`);
       return response?.data;
     } catch (error) {
       axiosErrorHandler(error);
@@ -49,7 +49,7 @@ const getUserSlice = createSlice({
       state.errors = [];
       state.isSuccess = action?.payload?.success;
       state.message = action?.payload?.message;
-      state.admin = action?.payload?.admin;
+      state.data = action?.payload?.data;
     });
     builder.addCase(getUser.rejected, (state, action) => {
       state.isLoading = false;

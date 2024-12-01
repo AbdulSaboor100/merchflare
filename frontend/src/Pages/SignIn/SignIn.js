@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./SignIn.module.scss";
 import {
   Button,
@@ -7,22 +7,90 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import validator from "validator";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { userSignIn } from "../../Redux/Features/userSignInSlice";
 
 const SignIn = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [clientError, setClientError] = useState({});
+
+  const handleSignIn = () => {
+    let isErr = false;
+    let errors = {};
+
+    if (!validator.isEmail(formData?.email)) {
+      isErr = true;
+      errors.email = "Email is invalid";
+    }
+    if (!validator.isLength(formData?.password, { min: 6 })) {
+      isErr = true;
+      errors.password = "Password should be 6 or more characters long";
+    }
+    if (validator.isEmpty(formData?.email)) {
+      isErr = true;
+      errors.email = "Email is required";
+    }
+    if (validator.isEmpty(formData?.password)) {
+      isErr = true;
+      errors.password = "Password is required";
+    }
+
+    if (isErr) {
+      isErr = false;
+      setClientError(errors);
+    } else {
+      setClientError({});
+      const data = {
+        data: {
+          email: formData?.email,
+          password: formData?.password,
+        },
+        onSuccess: () => {
+          setFormData({
+            email: "",
+            password: "",
+          });
+        },
+        navigate,
+      };
+      dispatch(userSignIn(data));
+    }
+  };
   return (
     <div className={styles.sign_in_container}>
       <Typography variant="h6">Merch flare</Typography>
       <div className={styles.form_container}>
         <Typography variant="h5">Sign in to Merch Flare</Typography>
         <Typography variant="body1">
-          New user? <Typography variant="caption">Create an account</Typography>
+          New user?{" "}
+          <Typography variant="caption" onClick={() => navigate("/signup")}>
+            Create an account
+          </Typography>
         </Typography>
         <div className={styles.form}>
-          <TextField label={"Email address"} variant="outlined" />
+          <TextField
+            label={"Email address"}
+            value={formData?.email}
+            onChange={(e) =>
+              setFormData((d) => ({ ...d, email: e?.target?.value }))
+            }
+            variant="outlined"
+          />
           <TextField
             label={"Password"}
             variant="outlined"
             sx={{ marginTop: "24px" }}
+            value={formData?.password}
+            onChange={(e) =>
+              setFormData((d) => ({ ...d, password: e?.target?.value }))
+            }
             slotProps={{
               input: {
                 endAdornment: (
@@ -59,6 +127,7 @@ const SignIn = () => {
             variant="contained"
             size="large"
             className={styles.login_button}
+            onClick={handleSignIn}
           >
             Login
           </Button>

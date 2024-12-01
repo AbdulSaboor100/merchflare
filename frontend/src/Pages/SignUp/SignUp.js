@@ -1,15 +1,82 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./SignUp.module.scss";
+import validator from "validator";
 import {
   Button,
-  Divider,
   Grid,
   InputAdornment,
   TextField,
   Typography,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { userSignUp } from "../../Redux/Features/userSignUpSlice";
 
 const SignUp = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  });
+  const [clientError, setClientError] = useState({});
+
+  const handleSignUp = () => {
+    let isErr = false;
+    let errors = {};
+
+    if (!validator.isEmail(formData?.email)) {
+      isErr = true;
+      errors.email = "Email is invalid";
+    }
+    if (!validator.isLength(formData?.password, { min: 6 })) {
+      isErr = true;
+      errors.password = "Password should be 6 or more characters long";
+    }
+    if (validator.isEmpty(formData?.firstName)) {
+      isErr = true;
+      errors.firstName = "First name is required";
+    }
+    if (validator.isEmpty(formData?.lastName)) {
+      isErr = true;
+      errors.lastName = "Last name is required";
+    }
+    if (validator.isEmpty(formData?.email)) {
+      isErr = true;
+      errors.email = "Email is required";
+    }
+    if (validator.isEmpty(formData?.password)) {
+      isErr = true;
+      errors.password = "Password is required";
+    }
+
+    if (isErr) {
+      isErr = false;
+      setClientError(errors);
+    } else {
+      setClientError({});
+      const data = {
+        data: {
+          name: `${formData?.firstName}${formData?.lastName}`,
+          email: formData?.email,
+          password: formData?.password,
+        },
+        onSuccess: () => {
+          setFormData({
+            email: "",
+            firstName: "",
+            lastName: "",
+            password: "",
+          });
+        },
+        navigate,
+      };
+      dispatch(userSignUp(data));
+    }
+  };
+
   return (
     <div className={styles.sign_in_container}>
       <Typography variant="h6">Merch flare</Typography>
@@ -17,26 +84,52 @@ const SignUp = () => {
         <Typography variant="h5">Get started</Typography>
         <Typography variant="body1">
           Already have an account?{" "}
-          <Typography variant="caption">Sign in</Typography>
+          <Typography variant="caption" onClick={() => navigate("/signin")}>
+            Sign in
+          </Typography>
         </Typography>
         <div className={styles.form}>
           <Grid container spacing={2}>
             <Grid item lg={6}>
-              <TextField label={"First name"} variant="outlined" />
+              <TextField
+                label={"First name"}
+                value={formData?.firstName}
+                onChange={(e) =>
+                  setFormData((d) => ({ ...d, firstName: e?.target?.value }))
+                }
+                variant="outlined"
+              />
             </Grid>
             <Grid item lg={6}>
-              <TextField label={"Last name"} variant="outlined" />
+              <TextField
+                label={"Last name"}
+                value={formData?.lastName}
+                onChange={(e) =>
+                  setFormData((d) => ({ ...d, lastName: e?.target?.value }))
+                }
+                variant="outlined"
+              />
             </Grid>
           </Grid>
           <TextField
             sx={{ marginTop: "24px" }}
             label={"Email address"}
             variant="outlined"
+            value={formData?.email}
+            onChange={(e) =>
+              setFormData((d) => ({ ...d, email: e?.target?.value }))
+            }
           />
           <TextField
             label={"Password"}
             variant="outlined"
             sx={{ marginTop: "24px" }}
+            value={formData?.password}
+            onChange={(e) =>
+              setFormData((d) => {
+                return { ...d, password: e?.target?.value };
+              })
+            }
             slotProps={{
               input: {
                 endAdornment: (
@@ -73,8 +166,9 @@ const SignUp = () => {
             variant="contained"
             size="large"
             className={styles.login_button}
+            onClick={handleSignUp}
           >
-            Login
+            Sign Up
           </Button>
           <Typography variant="caption" className={styles.sign_container}>
             By signing up, I agree to <a>Terms of condition</a> and{" "}
