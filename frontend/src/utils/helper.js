@@ -67,7 +67,7 @@ export const axiosErrorHandler = (error) => {
   }
   if (error?.response?.status == 401) {
     removeCookie("token");
-    window.location.pathname = "/";
+    // window.location.pathname = "/";
   }
   if (error?.response?.status == 400) {
     for (let errorData of error?.response?.data?.errors) {
