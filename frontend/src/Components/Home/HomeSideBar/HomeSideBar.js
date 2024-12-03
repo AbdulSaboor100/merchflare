@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./HomeSideBar.module.scss";
 import {
   TextField,
@@ -54,6 +54,7 @@ const HomeSideBar = ({
   merchData,
   setMerchData,
 }) => {
+  const [isDatePickerActive, setIsDatePickerActive] = useState(false);
   const handleDataMinMax = (filterData, fieldName1, fieldName2) => {
     return filterData?.filter((d, i) => {
       let dField = parseFloat(d[fieldName2]?.replace(/,/g, ""));
@@ -213,6 +214,10 @@ const HomeSideBar = ({
     setMerchData(mainFilterData);
   };
 
+  useEffect(() => {
+    // datePickerRef.current.children[0].children[1].placeholder = "All Time";
+  }, []);
+
   return (
     <div className={styles.home_side_bar_container}>
       <div className={styles.selection_container}>
@@ -273,7 +278,7 @@ const HomeSideBar = ({
           <Box className={styles.input_container}>
             <TextField
               label="Min"
-              defaultValue="0"
+              // defaultValue="0"
               size="small"
               sx={{ width: "100%" }}
               value={filters?.priceRange?.min}
@@ -286,7 +291,7 @@ const HomeSideBar = ({
             />
             <TextField
               label="Max"
-              defaultValue="0"
+              // defaultValue="0"
               size="small"
               sx={{ width: "100%", marginLeft: "16px" }}
               value={filters?.priceRange?.max}
@@ -304,7 +309,7 @@ const HomeSideBar = ({
           <Box className={styles.input_container}>
             <TextField
               label="Min"
-              defaultValue="0"
+              // defaultValue="0"
               size="small"
               sx={{ width: "100%" }}
               value={filters?.avg30Bsr?.min}
@@ -317,7 +322,7 @@ const HomeSideBar = ({
             />
             <TextField
               label="Max"
-              defaultValue="0"
+              // defaultValue="0"
               size="small"
               sx={{ width: "100%", marginLeft: "16px" }}
               value={filters?.avg30Bsr?.max}
@@ -335,7 +340,7 @@ const HomeSideBar = ({
           <Box className={styles.input_container}>
             <TextField
               label="Min"
-              defaultValue="0"
+              // defaultValue="0"
               size="small"
               sx={{ width: "100%" }}
               value={filters?.reviewsRange?.min}
@@ -348,7 +353,7 @@ const HomeSideBar = ({
             />
             <TextField
               label="Max"
-              defaultValue="0"
+              // defaultValue="0"
               size="small"
               sx={{ width: "100%", marginLeft: "16px" }}
               value={filters?.reviewsRange?.max}
@@ -366,7 +371,7 @@ const HomeSideBar = ({
           <Box className={styles.input_container}>
             <TextField
               label="Min"
-              defaultValue="0"
+              // defaultValue="0"
               size="small"
               sx={{ width: "100%" }}
               value={filters?.salesRange?.min}
@@ -379,7 +384,7 @@ const HomeSideBar = ({
             />
             <TextField
               label="Max"
-              defaultValue="0"
+              // defaultValue="0"
               size="small"
               sx={{ width: "100%", marginLeft: "16px" }}
               value={filters?.salesRange?.max}
@@ -397,7 +402,7 @@ const HomeSideBar = ({
           <Box className={styles.input_container}>
             <TextField
               label="Min"
-              defaultValue="0"
+              // defaultValue="0"
               size="small"
               sx={{ width: "100%" }}
               value={filters?.salesRankRange?.min}
@@ -413,7 +418,7 @@ const HomeSideBar = ({
             />
             <TextField
               label="Max"
-              defaultValue="0"
+              // defaultValue="0"
               size="small"
               sx={{ width: "100%", marginLeft: "16px" }}
               value={filters?.salesRankRange?.max}
@@ -433,57 +438,14 @@ const HomeSideBar = ({
           <Typography variant="caption">Published After</Typography>
 
           <Box className={styles.date_container}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                label="All Time"
-                value={
-                  filters?.publishedAfter
-                    ? dayjs(filters?.publishedAfter)
-                    : undefined
-                }
-                onChange={(e) => {
-                  setFilters((f) => ({
-                    ...f,
-                    publishedAfter: e.valueOf(),
-                  }));
-                }}
-              />
-            </LocalizationProvider>
-            {/* {isDatePickerActive && (
-              <Box className={styles.static_date}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DemoContainer
-                    sx={{ padding: "0" }}
-                    components={["StaticDatePicker"]}
-                  >
-                    <StaticDatePicker
-                      onAccept={(e) => {
-                        console.log(e);
-                      }}
-                      defaultValue={dayjs("2022-04-17")}
-                      value={dayjs(filters?.publishedAfter)}
-                      onChange={(e) => {
-                        setFilters((f) => ({
-                          ...f,
-                          publishedAfter: e.valueOf(),
-                        }));
-                      }}
-                    />
-                  </DemoContainer>
-                </LocalizationProvider>
-              </Box>
-            )} */}
-            {/* <TextField
-              id="input-with-icon-textfield"
+            <TextField
               size="small"
-              // defaultValue={"All Time"}
-              // value={"All Time"}
               sx={{ width: "100%" }}
-              onClick={() => setIsDatePickerActive(!isDatePickerActive)}
-              // value={filters?.publishedAfter}
-              // onChange={(e) =>
-              //   setFilters((f) => ({ ...f, publishedAfter: e?.target?.value }))
-              // }
+              value={
+                filters?.publishedAfter
+                  ? dayjs(filters?.publishedAfter)?.format("DD/MM/YYYY")
+                  : "All Time"
+              }
               slotProps={{
                 input: {
                   startAdornment: (
@@ -498,7 +460,10 @@ const HomeSideBar = ({
                         stroke-width="2"
                         stroke-linecap="round"
                         stroke-linejoin="round"
-                        class="lucide lucide-calendar"
+                        className={styles.start_adornment}
+                        onClick={() =>
+                          setIsDatePickerActive((isDate) => !isDate)
+                        }
                       >
                         <path d="M8 2v4"></path>
                         <path d="M16 2v4"></path>
@@ -509,7 +474,36 @@ const HomeSideBar = ({
                   ),
                 },
               }}
-            /> */}
+            />
+            {isDatePickerActive && (
+              <div className={styles.static_date}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <StaticDatePicker
+                    onAccept={(e) => {
+                      setIsDatePickerActive(false);
+                      setFilters((f) => ({
+                        ...f,
+                        publishedAfter: e.valueOf(),
+                      }));
+                    }}
+                    onError={() => {
+                      setIsDatePickerActive(false);
+                    }}
+                    onClose={() => {
+                      setIsDatePickerActive(false);
+                    }}
+                    // defaultValue={dayjs("2022-04-17")}
+                    // value={dayjs(filters?.publishedAfter)}
+                    // onChange={(e) => {
+                    //   setFilters((f) => ({
+                    //     ...f,
+                    //     publishedAfter: e.valueOf(),
+                    //   }));
+                    // }}
+                  />
+                </LocalizationProvider>
+              </div>
+            )}
           </Box>
         </Box>
         <Button

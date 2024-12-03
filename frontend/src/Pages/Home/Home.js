@@ -16,24 +16,24 @@ const Home = () => {
     marketPlace: "",
     sortBy: "",
     priceRange: {
-      min: "0",
-      max: "0",
+      min: "",
+      max: "",
     },
     avg30Bsr: {
-      min: "0",
-      max: "0",
+      min: "",
+      max: "",
     },
     reviewsRange: {
-      min: "0",
-      max: "0",
+      min: "",
+      max: "",
     },
     salesRange: {
-      min: "0",
-      max: "0",
+      min: "",
+      max: "",
     },
     salesRangeRank: {
-      min: "0",
-      max: "0",
+      min: "",
+      max: "",
     },
     publishedAfter: "",
   });

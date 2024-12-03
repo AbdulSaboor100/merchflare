@@ -24,11 +24,14 @@
       }
       .date_container {
         position: relative;
+        .start_adornment {
+          cursor: pointer;
+        }
+
         .static_date {
           position: absolute;
-          top: 2.5rem;
-          left: 0;
-          right: 0;
+          bottom: 0;
+          z-index: 100;
 
           background-color: rgb(255, 255, 255);
           box-shadow: rgba(145, 158, 171, 0.2) 0px 0px 2px 0px,
