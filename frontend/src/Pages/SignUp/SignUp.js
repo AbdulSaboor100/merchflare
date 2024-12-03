@@ -91,18 +91,20 @@ const SignUp = () => {
         </Typography>
         <div className={styles.form}>
           <Grid container spacing={2}>
-            <Grid item lg={6}>
+            <Grid item xs={12} sm={12} md={12} lg={6}>
               <TextField
                 label={"First name"}
                 value={formData?.firstName}
+                sx={{ width: "100%" }}
                 onChange={(e) =>
                   setFormData((d) => ({ ...d, firstName: e?.target?.value }))
                 }
                 variant="outlined"
               />
             </Grid>
-            <Grid item lg={6}>
+            <Grid item xs={12} sm={12} md={12} lg={6}>
               <TextField
+                sx={{ width: "100%" }}
                 label={"Last name"}
                 value={formData?.lastName}
                 onChange={(e) =>

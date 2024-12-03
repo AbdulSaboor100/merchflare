@@ -1,6 +1,9 @@
 .main_product_card_container {
-  position: relative;
+  // position: relative;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   &:hover .chart_paper_container {
     // display: block;
     visibility: visible;
@@ -10,14 +13,26 @@
     z-index: 10;
     // display: none;
     visibility: hidden;
-    top: 0;
-    left: 0;
-
+    // top: 0;
+    // left: 0;
+    max-width: 500px;
+    width: 100%;
+    @media only screen and (max-width: 900px) {
+      left: 0;
+      right: 0;
+      width: 100%;
+      max-width: 90%;
+      margin: auto;
+    }
     .chart_container {
       padding: 1rem;
       // box-shadow: var(0 0 #0000, 0 0 #0000), var(0 0 #0000, 0 0 #0000),
       //   0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
       // background-color: rgb(255 255 255);
+      .line_chart_container {
+        // width: 300px;
+        // height: 250px;
+      }
 
       text {
         font-size: 0.7rem;

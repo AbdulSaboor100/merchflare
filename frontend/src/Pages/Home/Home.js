@@ -64,7 +64,7 @@ const Home = () => {
           <Grid item sm={12} md={8} lg={9}>
             <Grid container spacing={4}>
               {merchData?.map((item, i) => (
-                <Grid item lg={3} key={i}>
+                <Grid item xs={12} sm={4} md={4} lg={3} xl={3} key={i}>
                   <ProductCard data={item} />
                 </Grid>
               ))}

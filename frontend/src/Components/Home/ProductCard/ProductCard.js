@@ -1173,15 +1173,17 @@ const bsrData = [
 
 const ProductCard = ({ data }) => {
   const elementRef = useRef(null);
+  const lineChartRef = useRef(null);
 
   const adjustPosition = () => {
     if (elementRef.current) {
       const element = elementRef.current;
       const rect = element.getBoundingClientRect();
-
       const r = window.innerWidth - rect.left;
       if (rect?.width > r) {
-        element.style.left = `-${rect.width}px`;
+        if (window?.innerWidth >= 900) {
+          element.style.right = `${rect.width / 2.5}px`;
+        }
       }
     }
   };
@@ -1200,89 +1202,37 @@ const ProductCard = ({ data }) => {
       window.removeEventListener("scroll", adjustPosition);
     };
   }, []);
+
   return (
     <Fragment>
-      {/* <Popper
-        // onMouseEnter={() => setAnchorEl(anchorEl)}
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        placement="left-start"
-        sx={{ transform: "translate(-202px, 160px) !important" }}
-      >
-        <Paper>
-          <Box className={styles.chart_container}>
-            <div className={styles.title_container}>
-              <Typography variant="h5">BSR History</Typography>
-              <Typography variant="caption">Last 500 days</Typography>
-            </div>
-            <LineChart
-              width={500}
-              height={250}
-              data={data}
-              // margin={{
-              //   top: 5,
-              //   right: 30,
-              //   left: 20,
-              //   bottom: 5,
-              // }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
-              <YAxis dataKey="bsr" />
-              <Tooltip
-                formatter={(value, name) => [value, name?.toUpperCase()]}
-              />
-              <Line
-                type="monotone"
-                dataKey="bsr"
-                stroke="#8884d8"
-                dot={false}
-                strokeWidth={2}
-              />
-            </LineChart>
-          </Box>
-        </Paper>
-      </Popper> */}
-
-      <div
-        className={styles.main_product_card_container}
-        // onMouseEnter={handleClick}
-        // onMouseLeave={() => {
-        //   setAnchorEl(null);
-        // }}
-      >
+      <div className={styles.main_product_card_container}>
         <Paper className={styles.chart_paper_container} ref={elementRef}>
           <Box className={styles.chart_container}>
             <div className={styles.title_container}>
               <Typography variant="h5">BSR History</Typography>
               <Typography variant="caption">Last 500 days</Typography>
             </div>
-            <LineChart
-              width={500}
-              height={250}
-              data={bsrData}
-              // margin={{
-              //   top: 5,
-              //   right: 30,
-              //   left: 20,
-              //   bottom: 5,
-              // }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="date" />
-              <YAxis dataKey="bsr" />
-              <Tooltip
-                formatter={(value, name) => [value, name?.toUpperCase()]}
-              />
-              <Line
-                type="monotone"
-                dataKey="bsr"
-                stroke="#8884d8"
-                dot={false}
-                strokeWidth={2}
-              />
-            </LineChart>
+            <ResponsiveContainer width={"100%"} height={300}>
+              <LineChart
+                data={bsrData}
+                className={styles.line_chart_container}
+                ref={lineChartRef}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="date" />
+                <YAxis dataKey="bsr" />
+                <Tooltip
+                  formatter={(value, name) => [value, name?.toUpperCase()]}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="bsr"
+                  stroke="#8884d8"
+                  dot={false}
+                  strokeWidth={2}
+                />
+              </LineChart>
+            </ResponsiveContainer>
           </Box>
         </Paper>
         <Paper className={styles.product_card_container}>
