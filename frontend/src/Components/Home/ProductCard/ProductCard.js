@@ -1293,7 +1293,7 @@ const ProductCard = ({ data }) => {
             <Typography variant="h6">{data?.title}</Typography>
             <Typography variant="body1">
               {/* <Typography variant="caption">by</Typography>Geni Game */}
-              {data?.avg30bsr}
+              {/* {data?.avg30bsr} */}
             </Typography>
           </div>
           <Divider></Divider>
