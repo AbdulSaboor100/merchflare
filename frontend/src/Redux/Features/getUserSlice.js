@@ -34,7 +34,7 @@ const getUserSlice = createSlice({
   reducers: {
     logout: (state, action) => {
       removeCookie("token");
-      state.admin = {};
+      state.data = {};
       state.message = "";
     },
   },

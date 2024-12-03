@@ -59,6 +59,20 @@
     }
     .details_container {
       display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      .btn_container {
+        margin: 0px 0px 0px 20px;
+        button {
+          min-width: 40px;
+        }
+        svg {
+          width: 24px;
+          height: 24px;
+          fill: #fff;
+        }
+      }
       p {
         margin: 0px 0px 0px 40px;
         display: flex;
